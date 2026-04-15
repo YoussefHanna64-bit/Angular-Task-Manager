@@ -1,0 +1,22 @@
+.card {
+  width: 70vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(245, 243, 243);
+  margin-bottom: 10px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  color: gray;
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-top: -10px;
+}
+
+h4 {
+  color: rgb(248, 41, 86);
+}
