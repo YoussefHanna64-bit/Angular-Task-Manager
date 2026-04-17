@@ -14,21 +14,32 @@ export class Carousel {
     this.auto();
   }
 
-  next() {
-    this.currentImgIndex = (this.currentImgIndex + 1) % this.images.length;
-  }
-
-  prev() {
-    this.currentImgIndex = (this.currentImgIndex - 1 + this.images.length) % this.images.length;
-  }
-
   auto() {
-    if (this.timeId) {
+    if (this.timeId !== undefined) {
       return;
     }
 
     this.timeId = setInterval(() => {
       this.next();
     }, 3000);
+  }
+
+  stop() {
+    if (this.timeId !== undefined) {
+      clearInterval(this.timeId);
+      this.timeId = undefined;
+    }
+  }
+
+  next() {
+    this.stop();
+    this.currentImgIndex = (this.currentImgIndex + 1) % this.images.length;
+    this.auto();
+  }
+
+  prev() {
+    this.stop();
+    this.currentImgIndex = (this.currentImgIndex - 1 + this.images.length) % this.images.length;
+    this.auto();
   }
 }
