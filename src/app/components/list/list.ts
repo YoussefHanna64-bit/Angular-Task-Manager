@@ -28,10 +28,8 @@ export class List {
   }
 
   Edit(task: Task) {
-    console.log('Editing task:', task.title);
   }
 
   Delete(task: Task) {
-    console.log('Deleting task:', task.title);
   }
 }
