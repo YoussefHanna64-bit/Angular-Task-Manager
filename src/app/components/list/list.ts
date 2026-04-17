@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Card } from '../card/card';
+import { Task } from '../../models/taskModel';
 
 @Component({
   selector: 'app-list',
@@ -7,4 +8,6 @@ import { Card } from '../card/card';
   styleUrl: './list.css',
   imports: [Card],
 })
-export class List {}
+export class List {
+  @Input() tasksList: Task[] = [];
+}

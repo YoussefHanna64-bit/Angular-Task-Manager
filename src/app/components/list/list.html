@@ -1,5 +1,8 @@
 <div class="list">
-  <app-card></app-card>
-  <app-card></app-card>
-  <app-card></app-card>
+  @if (tasksList.length === 0) {
+    <h4>No tasks yet</h4>
+  }
+  @for (t of tasksList; track t.title) {
+    <app-card [task]="t"></app-card>
+  }
 </div>

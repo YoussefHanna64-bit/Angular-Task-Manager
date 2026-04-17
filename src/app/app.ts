@@ -1,9 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { Header } from './components/header/header';
 import { Input } from './components/input/Input';
 import { Footer } from './components/footer/footer';
 import { List } from './components/list/list';
 import { Carousel } from './components/carousel/carousel';
+import { Task } from './models/taskModel';
 
 @Component({
   selector: 'app-root',
@@ -12,5 +13,9 @@ import { Carousel } from './components/carousel/carousel';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('TaskManager');
+  Tasks: Task[] = [];
+
+  addTaskToList(newTask: Task) {
+    this.Tasks.push(newTask);
+  }
 }

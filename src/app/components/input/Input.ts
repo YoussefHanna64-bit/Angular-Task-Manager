@@ -1,14 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Task {
-  title: string;
-  desc: string;
-  priority: 'low' | 'medium' | 'high';
-  date: string;
-  category: 'work' | 'personal' | 'study';
-  tags: string;
-}
+import { Task, Priorty, Category } from '../../models/taskModel';
 
 @Component({
   selector: 'app-input',
@@ -19,12 +11,12 @@ interface Task {
 export class Input {
   title: string = '';
   desc: string = '';
-  priority: 'low' | 'medium' | 'high' = 'low';
+  priority: Priorty = 'low';
   date: string = '';
-  category: 'work' | 'personal' | 'study' = 'work';
+  category: Category = 'work';
   tags: string = '';
 
-  tasksList: Task[] = [];
+  @Output() taskAdded = new EventEmitter<Task>();
 
   submit() {
     const newTask: Task = {
@@ -34,10 +26,10 @@ export class Input {
       date: this.date,
       category: this.category,
       tags: this.tags,
+      isDone: false,
     };
 
-    this.tasksList.push(newTask);
-    console.log(this.tasksList);
+    this.taskAdded.emit(newTask);
 
     this.title = '';
     this.desc = '';
