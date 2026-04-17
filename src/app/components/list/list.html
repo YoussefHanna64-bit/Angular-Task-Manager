@@ -1,8 +1,33 @@
-<div class="list">
-  @if (tasksList.length === 0) {
-    <h4>No tasks yet</h4>
-  }
-  @for (t of tasksList; track t.title) {
-    <app-card [task]="t"></app-card>
-  }
+<div class="container mt-4" style="max-width: 75vw">
+  <ul class="nav nav-tabs mb-4 justify-content-center">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="currentTab === 'all'" (click)="setTab('all')">
+        All Tasks
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="currentTab === 'done'" (click)="setTab('done')">
+        Done
+      </button>
+    </li>
+    <li class="nav-item">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 'not-done'"
+        (click)="setTab('not-done')"
+      >
+        Not Done
+      </button>
+    </li>
+  </ul>
+
+  <div class="list">
+    @if (filteredTasks.length === 0) {
+      <h4 class="m-5">No tasks yet</h4>
+    }
+
+    @for (t of filteredTasks; track t.title) {
+      <app-card [task]="t" (edit)="Edit(t)" (delete)="Delete(t)"> </app-card>
+    }
+  </div>
 </div>

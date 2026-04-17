@@ -1,10 +1,5 @@
-<div class="card" [class.completed]="task.isDone">
-  <input
-    type="checkbox"
-    [checked]="task.isDone"
-    (change)="done()"
-    class="Checkbox"
-  />
+<div class="taskCard" [class.completed]="task.isDone">
+  <input type="checkbox" [checked]="task.isDone" (change)="done()" class="Checkbox" />
 
   <div class="left">
     <h3 [class.strike]="task.isDone">{{ task.title }}</h3>
