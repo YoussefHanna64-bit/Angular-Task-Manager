@@ -10,4 +10,28 @@ import { Task } from '../../models/taskModel';
 })
 export class List {
   @Input() tasksList: Task[] = [];
+
+  currentTab: 'all' | 'not-done' | 'done' = 'all';
+
+  get filteredTasks(): Task[] {
+    if (this.currentTab === 'done') {
+      return this.tasksList.filter((t) => t.isDone);
+    }
+    if (this.currentTab === 'not-done') {
+      return this.tasksList.filter((t) => !t.isDone);
+    }
+    return this.tasksList;
+  }
+
+  setTab(tab: 'all' | 'not-done' | 'done') {
+    this.currentTab = tab;
+  }
+
+  Edit(task: Task) {
+    console.log('Editing task:', task.title);
+  }
+
+  Delete(task: Task) {
+    console.log('Deleting task:', task.title);
+  }
 }
