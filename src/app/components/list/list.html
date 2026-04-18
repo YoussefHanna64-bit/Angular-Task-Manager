@@ -26,8 +26,8 @@
       <h4 class="m-5">No tasks yet</h4>
     }
 
-    @for (t of filteredTasks; track t.title) {
-      <app-card [task]="t" (edit)="Edit(t)" (delete)="Delete(t)"> </app-card>
+    @for (t of filteredTasks; track t.id) {
+      <app-card [task]="t" (edit)="Edit(t)" (delete)="Delete(t)" (notify)="notify.emit($event)"> </app-card>
     }
   </div>
 </div>

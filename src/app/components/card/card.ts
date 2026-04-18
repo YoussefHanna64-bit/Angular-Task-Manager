@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../models/taskModel';
+import { AppNotification } from '../../models/notificationModel';
 
 @Component({
   selector: 'app-card',
@@ -7,12 +8,23 @@ import { Task } from '../../models/taskModel';
   styleUrl: './card.css',
 })
 export class Card {
-  @Input() task!: Task;
+  @Input() task: Task | null = null;
 
   @Output() edit = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
+  @Output() notify = new EventEmitter<AppNotification>();
 
   done() {
+    if (!this.task) {
+      return;
+    }
+
     this.task.isDone = !this.task.isDone;
+
+    if (this.task.isDone) {
+      this.notify.emit({ msg: 'Task is done', type: 'success' });
+    } else {
+      this.notify.emit({ msg: 'Task is not done.', type: 'info' });
+    }
   }
 }

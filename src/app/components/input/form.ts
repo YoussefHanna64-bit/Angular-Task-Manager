@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { v4 as uuidv4 } from 'uuid';
 import { Task, Priorty, Category } from '../../models/taskModel';
+import { AppNotification } from '../../models/notificationModel';
 
 @Component({
   selector: 'app-form',
@@ -17,7 +19,7 @@ export class Form {
   tags: string = '';
 
   currentEditedTask: Task | null = null;
-
+  @Output() notify = new EventEmitter<AppNotification>();
   @Output() taskAdded = new EventEmitter<Task>();
 
   @Input() set editedTask(task: Task | null) {
@@ -34,6 +36,11 @@ export class Form {
   }
 
   submit() {
+    if (!this.title || !this.desc || !this.date) {
+      this.notify.emit({ msg: 'Title, Description, and Date are required', type: 'warning' });
+      return;
+    }
+
     if (this.currentEditedTask) {
       this.currentEditedTask.title = this.title;
       this.currentEditedTask.desc = this.desc;
@@ -42,8 +49,11 @@ export class Form {
       this.currentEditedTask.category = this.category;
       this.currentEditedTask.tags = this.tags;
       this.currentEditedTask = null;
+
+      this.notify.emit({ msg: 'Task updated', type: 'success' });
     } else {
       const newTask: Task = {
+        id: uuidv4(),
         title: this.title,
         desc: this.desc,
         priority: this.priority,
@@ -54,6 +64,7 @@ export class Form {
       };
 
       this.taskAdded.emit(newTask);
+      this.notify.emit({ msg: 'Task added', type: 'success' });
     }
 
     this.title = '';
