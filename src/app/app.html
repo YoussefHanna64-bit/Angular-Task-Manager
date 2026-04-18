@@ -1,5 +1,20 @@
 <app-header></app-header>
 <app-carousel></app-carousel>
-<app-form (taskAdded)="addTaskToList($event)" [editedTask]="editedTask"></app-form>
-<app-list [tasksList]="Tasks" (editTask)="setEditedTask($event)"></app-list>
+<app-form
+  (taskAdded)="addTaskToList($event)"
+  [editedTask]="editedTask"
+  (notify)="showNotification($event)"
+></app-form>
+<app-list
+  [tasksList]="Tasks"
+  (editTask)="setEditedTask($event)"
+  (notify)="showNotification($event)"
+></app-list>
 <app-footer></app-footer>
+
+@if (currentNotification) {
+  <app-notification
+    [type]="currentNotification.type"
+    [msg]="currentNotification.msg"
+  ></app-notification>
+}

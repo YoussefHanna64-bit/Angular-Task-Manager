@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Card } from '../card/card';
 import { Task } from '../../models/taskModel';
+import { AppNotification } from '../../models/notificationModel';
 
 @Component({
   selector: 'app-list',
@@ -12,6 +13,7 @@ export class List {
   @Input() tasksList: Task[] = [];
 
   @Output() editTask = new EventEmitter<Task>();
+  @Output() notify = new EventEmitter<AppNotification>();
 
   currentTab: 'all' | 'not-done' | 'done' = 'all';
 
@@ -34,6 +36,11 @@ export class List {
   }
 
   Delete(task: Task) {
-    this.tasksList = this.tasksList.filter((t) => t.title !== task.title);
+    const index = this.tasksList.findIndex((t) => t.id === task.id);
+
+    if (index !== -1) {
+      this.tasksList.splice(index, 1);
+      this.notify.emit({ msg: 'Task deleted', type: 'danger' });
+    }
   }
 }
