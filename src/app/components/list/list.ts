@@ -15,19 +15,19 @@ export class List {
   @Output() editTask = new EventEmitter<Task>();
   @Output() notify = new EventEmitter<AppNotification>();
 
-  currentTab: 'all' | 'not-done' | 'done' = 'all';
+  currentTab: 'all' | 'notDone' | 'done' = 'all';
 
   get filteredTasks(): Task[] {
     if (this.currentTab === 'done') {
       return this.tasksList.filter((t) => t.isDone);
     }
-    if (this.currentTab === 'not-done') {
+    if (this.currentTab === 'notDone') {
       return this.tasksList.filter((t) => !t.isDone);
     }
     return this.tasksList;
   }
 
-  setTab(tab: 'all' | 'not-done' | 'done') {
+  setTab(tab: 'all' | 'notDone' | 'done') {
     this.currentTab = tab;
   }
 
