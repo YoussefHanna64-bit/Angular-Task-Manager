@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Card } from '../card/card';
 import { Task } from '../../models/taskModel';
 
@@ -10,6 +10,8 @@ import { Task } from '../../models/taskModel';
 })
 export class List {
   @Input() tasksList: Task[] = [];
+
+  @Output() editTask = new EventEmitter<Task>();
 
   currentTab: 'all' | 'not-done' | 'done' = 'all';
 
@@ -28,8 +30,10 @@ export class List {
   }
 
   Edit(task: Task) {
+    this.editTask.emit(task);
   }
 
   Delete(task: Task) {
+    this.tasksList = this.tasksList.filter((t) => t.title !== task.title);
   }
 }

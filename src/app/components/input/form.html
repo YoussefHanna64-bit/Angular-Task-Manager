@@ -19,5 +19,10 @@
 
   <input type="text" name="tags" [(ngModel)]="tags" id="tags" placeholder="Tags" />
 
-  <input type="submit" (click)="submit()" id="submit" value="Add Task" />
+  <input
+    type="submit"
+    (click)="submit()"
+    id="submit"
+    [value]="currentEditedTask ? 'Update Task' : 'Add Task'"
+  />
 </form>

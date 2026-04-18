@@ -1,5 +1,5 @@
 <app-header></app-header>
 <app-carousel></app-carousel>
-<app-input (taskAdded)="addTaskToList($event)"></app-input>
-<app-list [tasksList]="Tasks"></app-list>
+<app-form (taskAdded)="addTaskToList($event)" [editedTask]="editedTask"></app-form>
+<app-list [tasksList]="Tasks" (editTask)="setEditedTask($event)"></app-list>
 <app-footer></app-footer>
