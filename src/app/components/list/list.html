@@ -21,13 +21,38 @@
     </li>
   </ul>
 
-  <div class="list">
-    @if (filteredTasks.length === 0) {
-      <h4 class="m-5">No tasks yet</h4>
+  @switch (currentTab) {
+    @case ('all') {
+      <app-tab
+        tabName="All Tasks"
+        [tasks]="filteredTasks"
+        (edit)="Edit($event)"
+        (delete)="Delete($event)"
+        (notify)="notify.emit($event)"
+      >
+      </app-tab>
     }
 
-    @for (t of filteredTasks; track t.id) {
-      <app-card [task]="t" (edit)="Edit(t)" (delete)="Delete(t)" (notify)="notify.emit($event)"> </app-card>
+    @case ('done') {
+      <app-tab
+        tabName="Done Tasks"
+        [tasks]="filteredTasks"
+        (edit)="Edit($event)"
+        (delete)="Delete($event)"
+        (notify)="notify.emit($event)"
+      >
+      </app-tab>
     }
-  </div>
+
+    @case ('notDone') {
+      <app-tab
+        tabName="Not Done Tasks"
+        [tasks]="filteredTasks"
+        (edit)="Edit($event)"
+        (delete)="Delete($event)"
+        (notify)="notify.emit($event)"
+      >
+      </app-tab>
+    }
+  }
 </div>

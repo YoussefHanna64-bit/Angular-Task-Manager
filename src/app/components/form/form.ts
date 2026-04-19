@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { Task, Priorty, Category } from '../../models/taskModel';
@@ -19,11 +19,13 @@ export class Form {
   tags: string = '';
 
   currentEditedTask: Task | null = null;
+  @Input() editedTask: Task | null = null;
   @Output() notify = new EventEmitter<AppNotification>();
   @Output() taskAdded = new EventEmitter<Task>();
 
-  @Input() set editedTask(task: Task | null) {
-    if (task) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['editedTask'] && changes['editedTask'].currentValue) {
+      const task = changes['editedTask'].currentValue;
       this.currentEditedTask = task;
 
       this.title = task.title;

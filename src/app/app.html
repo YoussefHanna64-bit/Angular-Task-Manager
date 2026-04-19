@@ -1,12 +1,12 @@
 <app-header></app-header>
 <app-carousel></app-carousel>
 <app-form
-  (taskAdded)="addTaskToList($event)"
+  (taskAdded)="setTask($event)"
   [editedTask]="editedTask"
   (notify)="showNotification($event)"
 ></app-form>
 <app-list
-  [tasksList]="Tasks"
+  [task]="Task"
   (editTask)="setEditedTask($event)"
   (notify)="showNotification($event)"
 ></app-list>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Header } from './components/header/header';
-import { Form } from './components/input/form';
+import { Form } from './components/form/form';
 import { Footer } from './components/footer/footer';
 import { List } from './components/list/list';
 import { Carousel } from './components/carousel/carousel';
@@ -15,15 +15,15 @@ import { AppNotification } from './models/notificationModel';
   styleUrl: './app.css',
 })
 export class App {
-  Tasks: Task[] = [];
+  Task: Task | null = null;
 
   editedTask: Task | null = null;
 
   currentNotification: AppNotification | null = null;
   timeId: number | null = null;
 
-  addTaskToList(newTask: Task) {
-    this.Tasks.push(newTask);
+  setTask(newTask: Task) {
+    this.Task = newTask;
   }
 
   setEditedTask(task: Task) {
