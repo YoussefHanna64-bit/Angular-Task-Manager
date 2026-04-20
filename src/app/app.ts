@@ -1,44 +1,12 @@
-import { Component } from '@angular/core';
-import { Header } from './components/header/header';
-import { Form } from './components/form/form';
-import { Footer } from './components/footer/footer';
-import { List } from './components/list/list';
-import { Carousel } from './components/carousel/carousel';
-import { Task } from './models/taskModel';
-import { Notification } from './components/notification/notification';
-import { AppNotification } from './models/notificationModel';
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [Header, Carousel, Form, List, Footer, Notification],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.css'
 })
 export class App {
-  Task: Task | null = null;
-
-  editedTask: Task | null = null;
-
-  currentNotification: AppNotification | null = null;
-  timeId: number | null = null;
-
-  setTask(newTask: Task) {
-    this.Task = newTask;
-  }
-
-  setEditedTask(task: Task) {
-    this.editedTask = task;
-  }
-
-  showNotification(notification: AppNotification) {
-    this.currentNotification = notification;
-
-    if (this.timeId) {
-      clearTimeout(this.timeId);
-    }
-
-    this.timeId = setTimeout(() => {
-      this.currentNotification = null;
-    }, 3000);
-  }
+  protected readonly title = signal('TaskManager');
 }
