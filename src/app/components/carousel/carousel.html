@@ -1,0 +1,10 @@
+<div class="carousel">
+  <img src="left.png" id="left" (click)="prev()" />
+  <img [src]="images[currentImgIndex]" id="view" />
+  <img src="right.png" id="right" (click)="next()" />
+  <ul>
+    <li (click)="currentImgIndex = 0" [class.active]="currentImgIndex === 0"></li>
+    <li (click)="currentImgIndex = 1" [class.active]="currentImgIndex === 1"></li>
+    <li (click)="currentImgIndex = 2" [class.active]="currentImgIndex === 2"></li>
+  </ul>
+</div>

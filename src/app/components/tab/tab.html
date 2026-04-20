@@ -1,0 +1,15 @@
+<div class="list">
+  @if (tasks.length === 0) {
+    <h4 class="m-5">No tasks yet</h4>
+  }
+
+  @for (t of tasks; track t.id) {
+    <app-card
+      [task]="t"
+      (edit)="edit.emit(t)"
+      (delete)="delete.emit(t)"
+      (notify)="notify.emit($event)"
+    >
+    </app-card>
+  }
+</div>

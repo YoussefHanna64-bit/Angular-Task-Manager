@@ -1,0 +1,28 @@
+<form>
+  <input type="text" name="title" [(ngModel)]="title" id="title" placeholder="Title" />
+
+  <input type="text" name="desc" [(ngModel)]="desc" id="desc" placeholder="Desc" />
+
+  <select name="priority" [(ngModel)]="priority" id="priority">
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+
+  <input type="date" name="date" [(ngModel)]="date" id="date" />
+
+  <select name="category" [(ngModel)]="category" id="category">
+    <option value="work">Work</option>
+    <option value="personal">Personal</option>
+    <option value="study">Study</option>
+  </select>
+
+  <input type="text" name="tags" [(ngModel)]="tags" id="tags" placeholder="Tags" />
+
+  <input
+    type="submit"
+    (click)="submit()"
+    id="submit"
+    [value]="currentEditedTask ? 'Update Task' : 'Add Task'"
+  />
+</form>
