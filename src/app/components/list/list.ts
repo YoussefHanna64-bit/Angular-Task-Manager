@@ -10,7 +10,28 @@ import { Tab } from '../tab/tab';
   imports: [Tab],
 })
 export class List {
-  tasksList: Task[] = [];
+  tasksList: Task[] = [
+    {
+      id: '1',
+      title: 'Task 1',
+      desc: 'Desc 1',
+      priority: 'high',
+      date: '2024-06-30',
+      category: 'work',
+      tags: '',
+      isDone: false,
+    },
+    {
+      id: '2',
+      title: 'Task 2',
+      desc: 'Desc 2',
+      priority: 'low',
+      date: '2024-06-30',
+      category: 'work',
+      tags: '',
+      isDone: true,
+    },
+  ];
   @Input() task: Task | null = null;
 
   @Output() editTask = new EventEmitter<Task>();

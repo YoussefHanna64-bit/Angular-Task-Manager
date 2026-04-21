@@ -1,0 +1,66 @@
+<div class="card shadow-sm border-0 rounded-4 p-4 w-100" style="max-width: 450px">
+  <div class="card-body">
+    <h2 class="text-center mb-4 fw-bold text-primary">Welcome Back</h2>
+
+    <form #loginForm="ngForm" (ngSubmit)="login(email.value, password.value)">
+      <div style="min-height: 80px">
+        <input
+          ngModel
+          type="email"
+          name="email"
+          id="email"
+          class="form-control form-control-lg"
+          placeholder="Email"
+          pattern="[a-zA-Z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+          required
+          #email="ngModel"
+        />
+        <div class="mt-1">
+          @if (email.invalid && email.dirty && email.control.errors?.['required']) {
+            <small class="text-danger fw-bold">* Email is required</small>
+          }
+          @if (email.invalid && email.dirty && email.control.errors?.['pattern']) {
+            <small class="text-danger fw-bold">* Please write a valid email format</small>
+          }
+        </div>
+      </div>
+
+      <div style="min-height: 80px">
+        <input
+          ngModel
+          type="password"
+          name="password"
+          id="password"
+          class="form-control form-control-lg"
+          placeholder="Password"
+          required
+          minlength="8"
+          #password="ngModel"
+        />
+        <div class="mt-1">
+          @if (password.invalid && password.dirty && password.control.errors?.['required']) {
+            <small class="text-danger fw-bold">* Password is required</small>
+          }
+          @if (password.dirty && password.control.errors?.['minlength']) {
+            <small class="text-danger fw-bold">* Password must be at least 8 chars</small>
+          }
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg w-100 fw-bold mt-3"
+        [disabled]="loginForm.invalid"
+      >
+        Login
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <p class="text-muted mb-0">
+        Don't have an account?
+        <a routerLink="/signup" class="text-primary fw-bold text-decoration-none">Sign up</a>
+      </p>
+    </div>
+  </div>
+</div>

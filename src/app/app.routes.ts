@@ -32,11 +32,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./components/form/form').then((m) => m.Form),
+        loadComponent: () => import('./components/login/login').then((m) => m.Login),
       },
       {
         path: 'signup',
-        loadComponent: () => import('./components/form/form').then((m) => m.Form),
+        loadComponent: () => import('./components/signup/signup').then((m) => m.SignUp),
       },
     ],
   },

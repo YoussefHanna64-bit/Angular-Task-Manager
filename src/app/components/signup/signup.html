@@ -1,0 +1,104 @@
+<div class="card shadow-sm border-0 rounded-4 p-4 w-100" style="max-width: 450px">
+  <div class="card-body">
+    <h2 class="text-center mb-4 fw-bold text-primary">Create Account</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <div style="min-height: 80px">
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control form-control-lg"
+          placeholder="Full Name"
+        />
+
+        <div class="mt-1">
+          @if (signupForm.get('name')?.invalid && signupForm.get('name')?.dirty) {
+            @if (signupForm.get('name')?.errors?.['required']) {
+              <small class="text-danger fw-bold">* Name is required</small>
+            }
+            @if (signupForm.get('name')?.errors?.['minlength']) {
+              <small class="text-danger fw-bold">* Name must be at least 3 chars</small>
+            }
+          }
+        </div>
+      </div>
+
+      <div style="min-height: 80px">
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control form-control-lg"
+          placeholder="Email"
+        />
+
+        <div class="mt-1">
+          @if (signupForm.get('email')?.invalid && signupForm.get('email')?.dirty) {
+            @if (signupForm.get('email')?.errors?.['required']) {
+              <small class="text-danger fw-bold">* Email is required</small>
+            }
+            @if (signupForm.get('email')?.errors?.['email']) {
+              <small class="text-danger fw-bold">* Please write a valid email format</small>
+            }
+          }
+        </div>
+      </div>
+
+      <div style="min-height: 80px">
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control form-control-lg"
+          placeholder="Password"
+        />
+
+        <div class="mt-1">
+          @if (signupForm.get('password')?.invalid && signupForm.get('password')?.dirty) {
+            @if (signupForm.get('password')?.errors?.['required']) {
+              <small class="text-danger fw-bold">* Password is required</small>
+            }
+            @if (signupForm.get('password')?.errors?.['minlength']) {
+              <small class="text-danger fw-bold">* Password must be at least 8 chars</small>
+            }
+          }
+        </div>
+      </div>
+
+      <div style="min-height: 80px">
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          class="form-control form-control-lg"
+          placeholder="Confirm Password"
+        />
+
+        <div class="mt-1">
+          @if (
+            signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.dirty
+          ) {
+            @if (signupForm.get('confirmPassword')?.errors?.['required']) {
+              <small class="text-danger fw-bold">* Confirm Password is required</small>
+            }
+          }
+
+          @if (signupForm.hasError('missMatch') && signupForm.get('confirmPassword')?.dirty) {
+            <small class="text-danger fw-bold">* Passwords don't match</small>
+          }
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg w-100 fw-bold mt-3"
+        [disabled]="signupForm.invalid"
+      >
+        Sign Up
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <p class="text-muted mb-0">
+        Already have an account?
+        <a routerLink="/login" class="text-primary fw-bold text-decoration-none">Log in</a>
+      </p>
+    </div>
+  </div>
+</div>
