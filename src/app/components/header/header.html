@@ -8,7 +8,11 @@
     <a routerLinkActive="active" routerLink="myTasks">My Tasks</a>
   </nav>
   <nav class="right">
-    <a class="btn btn-outline-primary" routerLink="login">Login</a>
-    <a class="btn btn-primary text-white" routerLink="signup">Signup</a>
+    @if (currentUser) {
+      <button class="btn btn-outline-danger fw-bold" (click)="logout()">Logout</button>
+    } @else {
+      <a class="btn btn-outline-primary" routerLink="/auth/login">Login</a>
+      <a class="btn btn-primary text-white" routerLink="/auth/signup">Signup</a>
+    }
   </nav>
 </header>

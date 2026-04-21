@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './layouts/mainLayout/mainLayout';
 import { AuthLayout } from './layouts/authLayout/authLayout';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -18,18 +19,30 @@ export const routes: Routes = [
       },
       {
         path: 'addTask',
+        canActivate: [authGuard],
         loadComponent: () => import('./components/form/form').then((m) => m.Form),
       },
       {
         path: 'myTasks',
+        canActivate: [authGuard],
         loadComponent: () => import('./components/list/list').then((m) => m.List),
+      },
+      {
+        path: 'unauthorized',
+        loadComponent: () =>
+          import('./components/unauthorized/unauthorized').then((m) => m.Unauthorized),
       },
     ],
   },
   {
-    path: '',
+    path: 'auth',
     component: AuthLayout,
     children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
       {
         path: 'login',
         loadComponent: () => import('./components/login/login').then((m) => m.Login),

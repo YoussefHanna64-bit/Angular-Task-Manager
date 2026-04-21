@@ -52,6 +52,6 @@ export class SignUp {
     users.push(user);
     localStorage.setItem('users', JSON.stringify(users));
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
   }
 }
