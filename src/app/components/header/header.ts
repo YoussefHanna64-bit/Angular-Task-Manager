@@ -1,16 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { RouterLinkActive, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
   styleUrl: './header.css',
+  imports: [RouterLinkActive, RouterLink],
 })
-export class Header {
-  count: number = 0;
-
-  ngOnInit() {
-    setInterval(() => {
-      this.count++;
-    }, 1000);
-  }
-}
+export class Header {}

@@ -25,6 +25,11 @@ nav a {
   font-size: 0.95rem;
 }
 
-nav a:hover {
+.center a:hover {
   color: rgb(50, 120, 252);
+}
+
+nav a.active {
+  color: rgb(50, 120, 252);
+  font-weight: bold;
 }

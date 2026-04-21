@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
@@ -10,7 +10,9 @@ export class Carousel {
   currentImgIndex: number = 0;
   timeId: number | undefined;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
     this.auto();
   }
 
@@ -21,6 +23,7 @@ export class Carousel {
 
     this.timeId = setInterval(() => {
       this.next();
+      this.cdr.markForCheck();
     }, 3000);
   }
 
