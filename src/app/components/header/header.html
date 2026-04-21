@@ -2,9 +2,13 @@
   <div class="left">
     <h1>Task Manager</h1>
   </div>
-  <h4 class="m-0">{{ count }} seconds</h4>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">My Tasks</a>
+  <nav class="center">
+    <a routerLinkActive="active" routerLink="home">Home</a>
+    <a routerLinkActive="active" routerLink="addTask">Add Task</a>
+    <a routerLinkActive="active" routerLink="myTasks">My Tasks</a>
+  </nav>
+  <nav class="right">
+    <a class="btn btn-outline-primary" routerLink="login">Login</a>
+    <a class="btn btn-primary text-white" routerLink="signup">Signup</a>
   </nav>
 </header>
