@@ -55,4 +55,32 @@
       </app-tab>
     }
   }
+  <div
+    class="modal fade"
+    id="editTaskModal"
+    tabindex="-1"
+    aria-labelledby="modalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content position-relative">
+        <button
+          type="button"
+          class="btn-close position-absolute top-0 end-0 m-2"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+
+        <app-form [editedTask]="taskToEdit" (onTaskEdited)="closeModalBtn.click()"> </app-form
+        ><button #closeModalBtn class="d-none" data-bs-dismiss="modal"></button>
+      </div>
+    </div>
+  </div>
+
+  <button
+    #openModalBtn
+    class="d-none"
+    data-bs-toggle="modal"
+    data-bs-target="#editTaskModal"
+  ></button>
 </div>

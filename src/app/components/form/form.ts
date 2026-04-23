@@ -1,8 +1,9 @@
-import { Component, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter, Input, SimpleChanges, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { Task, Priorty, Category } from '../../models/taskModel';
 import { AppNotification } from '../../models/notificationModel';
+import { TaskService } from '../../services/taskService';
 
 @Component({
   selector: 'app-form',
@@ -18,10 +19,12 @@ export class Form {
   category: Category = 'work';
   tags: string = '';
 
+  taskService = inject(TaskService);
+
   currentEditedTask: Task | null = null;
   @Input() editedTask: Task | null = null;
   @Output() notify = new EventEmitter<AppNotification>();
-  @Output() taskAdded = new EventEmitter<Task>();
+  @Output() onTaskEdited = new EventEmitter<Task>();
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['editedTask'] && changes['editedTask'].currentValue) {
@@ -50,9 +53,10 @@ export class Form {
       this.currentEditedTask.date = this.date;
       this.currentEditedTask.category = this.category;
       this.currentEditedTask.tags = this.tags;
-      this.currentEditedTask = null;
 
+      this.taskService.updateTask(this.currentEditedTask);
       this.notify.emit({ msg: 'Task updated', type: 'success' });
+      this.onTaskEdited.emit(this.currentEditedTask);
     } else {
       const newTask: Task = {
         id: uuidv4(),
@@ -65,7 +69,7 @@ export class Form {
         isDone: false,
       };
 
-      this.taskAdded.emit(newTask);
+      this.taskService.addTask(newTask);
       this.notify.emit({ msg: 'Task added', type: 'success' });
     }
 

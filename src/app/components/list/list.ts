@@ -1,58 +1,50 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  inject,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Task } from '../../models/taskModel';
 import { AppNotification } from '../../models/notificationModel';
 import { Tab } from '../tab/tab';
+import { TaskService } from '../../services/taskService';
+import { Form } from '../form/form';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.html',
   styleUrl: './list.css',
-  imports: [Tab],
+  imports: [Tab, Form],
 })
 export class List {
-  tasksList: Task[] = [
-    {
-      id: '1',
-      title: 'Task 1',
-      desc: 'Desc 1',
-      priority: 'high',
-      date: '2024-06-30',
-      category: 'work',
-      tags: '',
-      isDone: false,
-    },
-    {
-      id: '2',
-      title: 'Task 2',
-      desc: 'Desc 2',
-      priority: 'low',
-      date: '2024-06-30',
-      category: 'work',
-      tags: '',
-      isDone: true,
-    },
-  ];
-  @Input() task: Task | null = null;
+  taskService = inject(TaskService);
+
+  taskToEdit: Task | null = null;
 
   @Output() editTask = new EventEmitter<Task>();
   @Output() notify = new EventEmitter<AppNotification>();
 
+  @ViewChild('openModalBtn') openModalBtn!: ElementRef;
+
   currentTab: 'all' | 'notDone' | 'done' = 'all';
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['task'] && changes['task'].currentValue) {
-      this.tasksList.push(changes['task'].currentValue);
-    }
+  ngOnInit() {
+    this.taskService.getAllTasks();
   }
 
   get filteredTasks(): Task[] {
+    const tasksList = this.taskService.tasks();
     if (this.currentTab === 'done') {
-      return this.tasksList.filter((t) => t.isDone);
+      return tasksList.filter((t) => t.isDone);
     }
     if (this.currentTab === 'notDone') {
-      return this.tasksList.filter((t) => !t.isDone);
+      return tasksList.filter((t) => !t.isDone);
     }
-    return this.tasksList;
+    return tasksList;
   }
 
   setTab(tab: 'all' | 'notDone' | 'done') {
@@ -60,15 +52,12 @@ export class List {
   }
 
   Edit(task: Task) {
-    this.editTask.emit(task);
+    this.taskToEdit = task;
+    this.openModalBtn.nativeElement.click();
   }
 
   Delete(task: Task) {
-    const index = this.tasksList.findIndex((t) => t.id === task.id);
-
-    if (index !== -1) {
-      this.tasksList.splice(index, 1);
-      this.notify.emit({ msg: 'Task deleted', type: 'danger' });
-    }
+    this.taskService.deleteTask(task.id);
+    this.notify.emit({ msg: 'Task deleted', type: 'danger' });
   }
 }

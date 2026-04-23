@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "The Legend",
+      "email": "Legend@gmail.com",
+      "password": "123456789"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Task 1",
+      "desc": "Desc 1",
+      "priority": "low",
+      "date": "2024-05-20",
+      "category": "study",
+      "tags": "sadsada",
+      "isDone": true
+    },
+    {
+      "id": "IMRKxdvZ58A",
+      "title": "Task 2",
+      "desc": "des 2",
+      "priority": "high",
+      "date": "2026-04-15",
+      "category": "study",
+      "tags": "sadasdasds",
+      "isDone": false
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
