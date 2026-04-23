@@ -13,6 +13,7 @@ import { AppNotification } from '../../models/notificationModel';
 import { Tab } from '../tab/tab';
 import { TaskService } from '../../services/taskService';
 import { Form } from '../form/form';
+import { NotificationService } from '../../services/notificationService';
 
 @Component({
   selector: 'app-list',
@@ -22,11 +23,11 @@ import { Form } from '../form/form';
 })
 export class List {
   taskService = inject(TaskService);
+  notificationService = inject(NotificationService);
 
   taskToEdit: Task | null = null;
 
   @Output() editTask = new EventEmitter<Task>();
-  @Output() notify = new EventEmitter<AppNotification>();
 
   @ViewChild('openModalBtn') openModalBtn!: ElementRef;
 
@@ -58,6 +59,6 @@ export class List {
 
   Delete(task: Task) {
     this.taskService.deleteTask(task.id);
-    this.notify.emit({ msg: 'Task deleted', type: 'danger' });
+    this.notificationService.showNotification('Task deleted', 'danger');
   }
 }

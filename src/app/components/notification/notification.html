@@ -1,53 +1,55 @@
-@switch (type) {
-  @case ('success') {
-    <div
-      class="toast show align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="d-flex">
-        <div class="toast-body">{{ msg }}</div>
+@if (currentNotification()) {
+  @switch (currentNotification()?.type) {
+    @case ('success') {
+      <div
+        class="toast show align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">{{ currentNotification()?.msg }}</div>
+        </div>
       </div>
-    </div>
-  }
+    }
 
-  @case ('danger') {
-    <div
-      class="toast show align-items-center text-white bg-danger border-0 position-fixed top-0 end-0 m-3"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="d-flex">
-        <div class="toast-body">{{ msg }}</div>
+    @case ('danger') {
+      <div
+        class="toast show align-items-center text-white bg-danger border-0 position-fixed top-0 end-0 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">{{ currentNotification()?.msg }}</div>
+        </div>
       </div>
-    </div>
-  }
+    }
 
-  @case ('warning') {
-    <div
-      class="toast show align-items-center text-dark bg-warning border-0 position-fixed top-0 end-0 m-3"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="d-flex">
-        <div class="toast-body">{{ msg }}</div>
+    @case ('warning') {
+      <div
+        class="toast show align-items-center text-dark bg-warning border-0 position-fixed top-0 end-0 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">{{ currentNotification()?.msg }}</div>
+        </div>
       </div>
-    </div>
-  }
+    }
 
-  @default {
-    <div
-      class="toast show align-items-center text-white bg-primary border-0 position-fixed top-0 end-0 m-3"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="d-flex">
-        <div class="toast-body">{{ msg }}</div>
+    @default {
+      <div
+        class="toast show align-items-center text-white bg-primary border-0 position-fixed top-0 end-0 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">{{ currentNotification()?.msg }}</div>
+        </div>
       </div>
-    </div>
+    }
   }
 }

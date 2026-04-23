@@ -4,12 +4,6 @@
   }
 
   @for (t of tasks; track t.id) {
-    <app-card
-      [task]="t"
-      (edit)="edit.emit(t)"
-      (delete)="delete.emit(t)"
-      (notify)="notify.emit($event)"
-    >
-    </app-card>
+    <app-card [task]="t" (edit)="edit.emit(t)" (delete)="delete.emit(t)"> </app-card>
   }
 </div>

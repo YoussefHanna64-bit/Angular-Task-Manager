@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/userModel';
+import { NotificationService } from '../../services/notificationService';
 
 function matchPassword(control: AbstractControl) {
   const password = control.get('password');
@@ -27,6 +28,8 @@ function matchPassword(control: AbstractControl) {
 })
 export class SignUp {
   router = inject(Router);
+  notificationService = inject(NotificationService);
+
   signupForm: FormGroup = new FormGroup(
     {
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -45,7 +48,7 @@ export class SignUp {
 
     const isExistingUser = users.find((u: User) => u.email === email);
     if (isExistingUser) {
-      alert('Email already exists');
+      this.notificationService.showNotification('Email already exists', 'warning');
       return;
     }
 

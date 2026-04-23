@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/userModel';
+import { NotificationService } from '../../services/notificationService';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { User } from '../../models/userModel';
 })
 export class Login {
   router = inject(Router);
+  notificationService = inject(NotificationService);
 
   login(email: string, password: string) {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -20,7 +22,7 @@ export class Login {
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.router.navigate(['/myTasks']);
     } else {
-      alert('Invalid email or password');
+      this.notificationService.showNotification('Invalid email or password', 'danger');
     }
   }
 }

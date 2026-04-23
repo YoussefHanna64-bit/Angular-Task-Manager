@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Card } from '../card/card';
 import { Task } from '../../models/taskModel';
 import { AppNotification } from '../../models/notificationModel';
+import { NotificationService } from '../../services/notificationService';
 
 @Component({
   selector: 'app-tab',
@@ -15,9 +16,9 @@ export class Tab {
 
   @Output() edit = new EventEmitter<Task>();
   @Output() delete = new EventEmitter<Task>();
-  @Output() notify = new EventEmitter<AppNotification>();
+  notificationService = inject(NotificationService);
 
   ngOnDestroy() {
-    this.notify.emit({ msg: `${this.tabName} tab is closed.`, type: 'info' });
+    this.notificationService.showNotification(`${this.tabName} tab is closed.`, 'info');
   }
 }
