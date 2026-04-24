@@ -58,7 +58,7 @@ export class TaskService {
     this.http.delete(`${this.baseUrl}/${taskId}`).subscribe({
       next: () => {
         this.tasks.update((tasks) => tasks.filter((t) => t.id !== taskId));
-        this.notificationService.showNotification('Task deleted', 'success');
+        this.notificationService.showNotification('Task deleted', 'danger');
       },
       error: () => {
         this.notificationService.showNotification('Failed to delete task', 'danger');

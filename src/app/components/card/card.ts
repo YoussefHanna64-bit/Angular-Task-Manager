@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Task } from '../../models/taskModel';
-import { AppNotification } from '../../models/notificationModel';
 import { NotificationService } from '../../services/notificationService';
+import { TaskService } from '../../services/taskService';
 
 @Component({
   selector: 'app-card',
@@ -10,6 +10,7 @@ import { NotificationService } from '../../services/notificationService';
 })
 export class Card {
   notificationService = inject(NotificationService);
+  taskService = inject(TaskService);
 
   @Input() task: Task | null = null;
 
@@ -21,12 +22,8 @@ export class Card {
       return;
     }
 
-    this.task.isDone = !this.task.isDone;
-
-    if (this.task.isDone) {
-      this.notificationService.showNotification('Task is done', 'success');
-    } else {
-      this.notificationService.showNotification('Task is not done.', 'info');
-    }
+    this.task.isDone = true;
+    this.taskService.updateTask(this.task);
+    this.notificationService.showNotification('Task is done', 'success');
   }
 }
