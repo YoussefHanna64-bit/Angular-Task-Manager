@@ -59,6 +59,5 @@ export class List {
 
   Delete(task: Task) {
     this.taskService.deleteTask(task.id);
-    this.notificationService.showNotification('Task deleted', 'danger');
   }
 }

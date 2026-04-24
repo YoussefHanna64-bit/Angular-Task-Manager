@@ -5,6 +5,7 @@ import { Task, Priorty, Category } from '../../models/taskModel';
 import { AppNotification } from '../../models/notificationModel';
 import { TaskService } from '../../services/taskService';
 import { NotificationService } from '../../services/notificationService';
+import { UserService } from '../../services/userService';
 
 @Component({
   selector: 'app-form',
@@ -22,6 +23,7 @@ export class Form {
 
   taskService = inject(TaskService);
   notificationService = inject(NotificationService);
+  userService = inject(UserService);
 
   currentEditedTask: Task | null = null;
   @Input() editedTask: Task | null = null;
@@ -50,6 +52,11 @@ export class Form {
       return;
     }
 
+    const currentUser = this.userService.user();
+    if (!currentUser) {
+      return;
+    }
+
     if (this.currentEditedTask) {
       this.currentEditedTask.title = this.title;
       this.currentEditedTask.desc = this.desc;
@@ -59,11 +66,11 @@ export class Form {
       this.currentEditedTask.tags = this.tags;
 
       this.taskService.updateTask(this.currentEditedTask);
-      this.notificationService.showNotification('Task updated', 'success');
       this.onTaskEdited.emit(this.currentEditedTask);
     } else {
       const newTask: Task = {
         id: uuidv4(),
+        userId: currentUser.id,
         title: this.title,
         desc: this.desc,
         priority: this.priority,
@@ -74,7 +81,6 @@ export class Form {
       };
 
       this.taskService.addTask(newTask);
-      this.notificationService.showNotification('Task added', 'success');
     }
 
     this.title = '';

@@ -9,6 +9,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/userModel';
 import { NotificationService } from '../../services/notificationService';
+import { UserService } from '../../services/userService';
 
 function matchPassword(control: AbstractControl) {
   const password = control.get('password');
@@ -29,6 +30,7 @@ function matchPassword(control: AbstractControl) {
 export class SignUp {
   router = inject(Router);
   notificationService = inject(NotificationService);
+  userService = inject(UserService);
 
   signupForm: FormGroup = new FormGroup(
     {
@@ -42,19 +44,30 @@ export class SignUp {
 
   signup() {
     const { name, email, password } = this.signupForm.value;
-    const user: User = { name, email, password };
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    const isExistingUser = users.find((u: User) => u.email === email);
-    if (isExistingUser) {
-      this.notificationService.showNotification('Email already exists', 'warning');
-      return;
-    }
-
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    this.router.navigate(['auth/login']);
+    this.userService.login(email).subscribe({
+      next: (users) => {
+        if (users.length > 0) {
+          this.notificationService.showNotification('Email already exists', 'warning');
+        } else {
+          this.userService.signup(name, email, password).subscribe({
+            next: (newUser) => {
+              this.userService.setCurrentUser(newUser);
+              this.router.navigate(['/myTasks']);
+              this.notificationService.showNotification('Welcome, ' + newUser.name, 'success');
+            },
+            error: () => {
+              this.notificationService.showNotification(
+                'Error happened. Please try again',
+                'danger',
+              );
+            },
+          });
+        }
+      },
+      error: () => {
+        this.notificationService.showNotification('Error happened. Please try again', 'danger');
+      },
+    });
   }
 }

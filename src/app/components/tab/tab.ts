@@ -18,7 +18,7 @@ export class Tab {
   @Output() delete = new EventEmitter<Task>();
   notificationService = inject(NotificationService);
 
-  ngOnDestroy() {
-    this.notificationService.showNotification(`${this.tabName} tab is closed.`, 'info');
-  }
+  // ngOnDestroy() {
+  //   this.notificationService.showNotification(`${this.tabName} tab is closed.`, 'info');
+  // }
 }

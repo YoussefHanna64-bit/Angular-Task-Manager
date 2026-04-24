@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLinkActive, RouterLink, Router } from '@angular/router';
+import { UserService } from '../../services/userService';
 
 @Component({
   selector: 'app-header',
@@ -9,13 +10,14 @@ import { RouterLinkActive, RouterLink, Router } from '@angular/router';
 })
 export class Header {
   router = inject(Router);
+  userService = inject(UserService);
 
   get currentUser() {
-    return localStorage.getItem('currentUser');
+    return this.userService.user();
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
+    this.userService.logout();
     this.router.navigate(['/auth/login']);
   }
 }

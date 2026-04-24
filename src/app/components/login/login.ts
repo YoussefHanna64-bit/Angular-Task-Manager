@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/userModel';
 import { NotificationService } from '../../services/notificationService';
+import { UserService } from '../../services/userService';
 
 @Component({
   selector: 'app-login',
@@ -13,16 +14,22 @@ import { NotificationService } from '../../services/notificationService';
 export class Login {
   router = inject(Router);
   notificationService = inject(NotificationService);
+  userService = inject(UserService);
 
   login(email: string, password: string) {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    const user = users.find((u: User) => u.email === email && u.password === password);
-    if (user) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.router.navigate(['/myTasks']);
-    } else {
-      this.notificationService.showNotification('Invalid email or password', 'danger');
-    }
+    this.userService.login(email).subscribe({
+      next: (users) => {
+        if (users.length > 0 && users[0].password === password) {
+          this.userService.setCurrentUser(users[0]);
+          this.router.navigate(['/myTasks']);
+          this.notificationService.showNotification('Welcome back, ' + users[0].name, 'success');
+        } else {
+          this.notificationService.showNotification('Invalid email or password', 'danger');
+        }
+      },
+      error: () => {
+        this.notificationService.showNotification('Error happened. Please try again', 'danger');
+      },
+    });
   }
 }
